@@ -1,4 +1,4 @@
-const CACHE_NAME = 'worship-setup-v1';
+const CACHE_NAME = 'worship-setup-v2';
 const ASSETS = [
   './',
   './index.html',
