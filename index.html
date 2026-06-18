@@ -227,6 +227,15 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 @media (max-width: 768px) and (min-width: 481px) {
 .song-columns-2 { column-count: 2; }
 }
+/* Скрытие PDF на мобильных и показ "Копировать" */
+@media (max-width: 768px) {
+  .pdf-desktop-only { display: none !important; }
+  .copy-mobile-only { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .copy-mobile-only { display: none !important; }
+  .pdf-desktop-only { display: flex; }
+}
 </style>
 </head>
 <body class="dark">
@@ -283,8 +292,9 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">🎵</span><span class="instruction-card-title">Локальные изменения в сет-листе</span></div><div class="instruction-card-text">В сет-листе можно менять тональность, Capo и текст — только для этого сет-листа. Помечается «(лок.)».</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">📝</span><span class="instruction-card-title">Заметки на секциях</span></div><div class="instruction-card-text">В правом верхнем углу блока — поле для короткой заметки (до 12 символов).</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">🎸</span><span class="instruction-card-title">Capo и транспонирование</span></div><div class="instruction-card-text">Меняйте тональность — аккорды пересчитаются. <b>Capo</b> тоже транспонирует. Работает с <code>D/F#</code>.</div></div>
-<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon"></span><span class="instruction-card-title">Экспорт и импорт</span></div><div class="instruction-card-text">• <b>📤 Экспорт базы</b> — все песни в <code>.clcdb</code> (можно задать имя)<br>• <b>📥 Импорт базы</b> — добавит новые песни<br>• <b>📤 поделиться</b> на песне — файл <code>.clcsong</code><br>• <b>📤 Поделиться</b> в сет-листе — <code>.clcsetlist</code></div></div>
-<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">📄</span><span class="instruction-card-title">PDF и печать</span></div><div class="instruction-card-text">Кнопка <b>📄 PDF</b> открывает диалог печати в 2 колонки.<br><br>📱 <b>На телефоне</b>: в диалоге печати выберите «<b>Сохранить как PDF</b>» — файл скачается в загрузки. Или «<b>Поделиться</b>» — отправить через мессенджер/почту.<br><br>💻 <b>На компьютере</b>: выберите принтер «Сохранить как PDF».</div></div>
+<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">📋</span><span class="instruction-card-title">Копирование текста</span></div><div class="instruction-card-text">На телефоне вместо кнопки PDF доступна кнопка <b>📋 Копировать</b> — копирует весь текст песни с аккордами в буфер обмена.</div></div>
+<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon"></span><span class="instruction-card-title">Экспорт и импорт</span></div><div class="instruction-card-text">• <b>📤 Экспорт базы</b> — все песни в <code>.clcdb</code> (можно задать имя)<br>• <b>📥 Импорт базы</b> — добавит новые песни<br>• <b>📤 поделиться</b> на песне — файл <code>.clcsong</code> (можно задать имя)<br>• <b>📤 Поделиться сет-листом</b> — <code>.clcsetlist</code> (можно задать имя)</div></div>
+<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">📄</span><span class="instruction-card-title">PDF и печать</span></div><div class="instruction-card-text">Кнопка <b>📄 PDF</b> (на компьютере) открывает диалог печати в 2 колонки.<br><br>💻 <b>На компьютере</b>: выберите принтер «Сохранить как PDF».</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon"></span><span class="instruction-card-title">Темы оформления</span></div><div class="instruction-card-text">• <b>🌙 / ☀️</b> — тёмная/светлая тема<br>• <b>VL</b> — инструкция, долгое нажатие — смена цвета</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon"></span><span class="instruction-card-title">Быстрые жесты</span></div><div class="instruction-card-text">• <b>Перетаскивание</b> песен в сет-листе — меняет порядок<br>• <b>Поле №</b> — вписать номер вручную<br>• <b>Долгое нажатие на VL</b> (800мс) — смена цвета</div></div>
 </div>
@@ -307,7 +317,7 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 </div>
 <div class="setlist-actions-row">
 <button class="btn-archive-sl" onclick="archiveCurrentSetlist()">📦 В архив</button>
-<button class="btn-share-sl" onclick="exportSetlist()">📤 Поделиться</button>
+<button class="btn-share-sl" onclick="exportSetlist()">📤 Поделиться сет-листом</button>
 </div>
 <div id="sl-songs-list"></div>
 </div>
@@ -328,7 +338,8 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 <option value="0">No Capo</option><option value="1">Capo 1</option><option value="2">Capo 2</option><option value="3">Capo 3</option><option value="4">Capo 4</option><option value="5">Capo 5</option><option value="6">Capo 6</option><option value="7">Capo 7</option><option value="8">Capo 8</option><option value="9">Capo 9</option><option value="10">Capo 10</option><option value="11">Capo 11</option>
 </select></div>
 <div class="toolbar-select-item"><span>📄</span><select class="columns-select" id="columns-select" onchange="changeColumns(this.value)"><option value="1">1 кол.</option><option value="2">2 кол.</option></select></div>
-<button class="toolbar-btn-item" onclick="downloadPdf()" title="PDF"> PDF</button>
+<button class="toolbar-btn-item pdf-desktop-only" onclick="downloadPdf()" title="PDF"> PDF</button>
+<button class="toolbar-btn-item copy-mobile-only" onclick="copySongText()" title="Копировать текст"><div style="display: flex; flex-direction: column; align-items: center; line-height: 1.1;"><span style="font-size: 20px;">📋</span><span style="font-size: 8px; margin-top: 2px;">копировать</span></div></button>
 </div>
 <div class="toolbar-row" style="margin-top: 8px;">
 <button class="toolbar-btn-item" onclick="changeFontSize(-2)" title="Уменьшить шрифт">A-</button>
@@ -357,7 +368,7 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 <button id="side-next" class="side-nav-btn side-nav-right" onclick="nextSong()">›</button>
 </div>
 
-<div id="modal-song-edit" class="modal"><div class="modal-content"><h2 id="modal-song-edit-title">Редактор песни</h2><div class="help-box"><b>Формат:</b><br>• Аккорды: <b>G C D Hm</b> (H вместо B!)<br>• Аккорды с басом: <b>C#/F G/B</b><br>• Аккорды + текст: <b>G C D Текст песни</b><br>• Текст в скобках: <b>(аллилуйя)</b><br>• Заметка справа: <b>G C D *повторить</b><br>• Комментарий строки: <b>G C D Текст **</b><br>• Повтор: <b>G C D x2</b><br>• Заголовки: <b>ПРИПЕВ:</b> <b>1 КУПЛЕТ:</b> <b>БРИДЖ 2:</b> <b>ПРЕД-ПРИПЕВ:</b> <b>МОСТ:</b> <b>КОДА:</b> <b>ВСТУПЛЕНИЕ:</b> <b>ПРОИГРЫШ:</b> <b>ИНСТРУМЕНТАЛ:</b> <b>TAG:</b> <b>2 ПРИПЕВ:</b><br>• Пустая строка = разделитель<br>• Картинка: <b>Картинка:</b> (отдельной строкой)<br>• Формат с разделителями: <b>| C | G | Am |</b></div><label style="font-weight: bold; margin-bottom: 5px; display: block;">Название <span class="required-star">*</span></label><input type="text" id="edit-title" placeholder="Название песни" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><label style="font-weight: bold; margin-bottom: 5px; display: block;">Автор (необязательно)</label><div style="position: relative;"><input type="text" id="edit-author" placeholder="Автор" oninput="showAuthorSuggestions()" onblur="setTimeout(() => hideAuthorSuggestions(), 200)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><div id="author-suggestions" class="author-suggestions" style="display: none;"></div></div><label style="font-weight: bold; margin-bottom: 5px; display: block;">Тональность <span class="required-star">*</span></label><select id="edit-key"><option value="">-- Выберите тональность --</option><option value="C">C (До)</option><option value="C#">C# / Db</option><option value="D">D (Ре)</option><option value="D#">D# / Eb</option><option value="E">E (Ми)</option><option value="F">F (Фа)</option><option value="F#">F# / Gb</option><option value="G">G (Соль)</option><option value="G#">G# / Ab</option><option value="A">A (Ля)</option><option value="A#">A# / Bb</option><option value="H">H (Си)</option></select><label style="font-weight: bold; margin-bottom: 5px; display: block;">BPM (необязательно)</label><input type="number" id="edit-bpm" placeholder="Например: 120" min="10" max="300" autocomplete="off"><label style="font-weight: bold; margin-bottom: 5px; display: block;">Текст песни <span class="required-star">*</span></label><textarea id="edit-text" placeholder="G C D&#10;Текст песни (аллилуйя) *повторить&#10;&#10;1 КУПЛЕТ:&#10;Hm C G&#10;Текст куплета" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea><div class="modal-actions"><button class="btn-secondary" onclick="closeModal('modal-song-edit')">Отмена</button><button class="btn-main" style="width: auto; margin:0;" onclick="saveSong()">Сохранить</button></div></div></div>
+<div id="modal-song-edit" class="modal"><div class="modal-content"><h2 id="modal-song-edit-title">Редактор песни</h2><div class="help-box"><b>Формат:</b><br>• Аккорды: <b>G C D Hm</b> (H вместо B!)<br>• Аккорды с басом: <b>C#/F G/B</b><br>• Аккорды + текст: <b>G C D Текст песни</b><br>• Текст в скобках: <b>(аллилуйя)</b><br>• Заметка справа: <b>G C D *повторить</b><br>• Комментарий строки: <b>G C D Текст **</b><br>• Повтор: <b>G C D x2</b><br>• Заголовки: <b>1 КУПЛЕТ:</b> <b>2 КУПЛЕТ:</b> <b>ПРИПЕВ:</b> <b>2 ПРИПЕВ:</b> <b>ПРИПЕВ 2:</b> <b>ПРЕД-ПРИПЕВ:</b> <b>ПОСТ-ПРИПЕВ:</b> <b>БРИДЖ:</b> <b>МОСТ:</b> <b>МОСТИК:</b> <b>СОЛО:</b> <b>ВСТУПЛЕНИЕ:</b> <b>ЗАПЕВ:</b> <b>ВСТАВКА:</b> <b>ПРОИГРЫШ:</b> <b>ИНСТРУМЕНТАЛ:</b> <b>КОДА:</b> <b>КОНЦОВКА:</b> <b>TAG:</b><br>• Пустая строка = разделитель<br>• Картинка: <b>Картинка:</b> (отдельной строкой)<br>• Формат с разделителями: <b>| C | G | Am |</b></div><label style="font-weight: bold; margin-bottom: 5px; display: block;">Название <span class="required-star">*</span></label><input type="text" id="edit-title" placeholder="Название песни" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><label style="font-weight: bold; margin-bottom: 5px; display: block;">Автор (необязательно)</label><div style="position: relative;"><input type="text" id="edit-author" placeholder="Автор" oninput="showAuthorSuggestions()" onblur="setTimeout(() => hideAuthorSuggestions(), 200)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><div id="author-suggestions" class="author-suggestions" style="display: none;"></div></div><label style="font-weight: bold; margin-bottom: 5px; display: block;">Тональность <span class="required-star">*</span></label><select id="edit-key"><option value="">-- Выберите тональность --</option><option value="C">C (До)</option><option value="C#">C# / Db</option><option value="D">D (Ре)</option><option value="D#">D# / Eb</option><option value="E">E (Ми)</option><option value="F">F (Фа)</option><option value="F#">F# / Gb</option><option value="G">G (Соль)</option><option value="G#">G# / Ab</option><option value="A">A (Ля)</option><option value="A#">A# / Bb</option><option value="H">H (Си)</option></select><label style="font-weight: bold; margin-bottom: 5px; display: block;">BPM (необязательно)</label><input type="number" id="edit-bpm" placeholder="Например: 120" min="10" max="300" autocomplete="off"><label style="font-weight: bold; margin-bottom: 5px; display: block;">Текст песни <span class="required-star">*</span></label><textarea id="edit-text" placeholder="G C D&#10;Текст песни (аллилуйя) *повторить&#10;&#10;1 КУПЛЕТ:&#10;Hm C G&#10;Текст куплета" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea><div class="modal-actions"><button class="btn-secondary" onclick="closeModal('modal-song-edit')">Отмена</button><button class="btn-main" style="width: auto; margin:0;" onclick="saveSong()">Сохранить</button></div></div></div>
 
 <div id="modal-section-edit" class="modal"><div class="modal-content"><h2>Редактировать блок</h2><label style="font-weight: bold; margin-bottom: 5px; display: block;">Название секции</label><input type="text" id="section-edit-label" placeholder="Например: КУПЛЕТ 1"><label style="font-weight: bold; margin-bottom: 5px; display: block;">Содержимое блока</label><textarea id="section-edit-content" style="min-height: 200px;"></textarea><div class="modal-actions"><button class="btn-secondary" onclick="closeModal('modal-section-edit')">Отмена</button><button class="btn-main" style="width: auto; margin:0;" onclick="saveSectionEdit()">Сохранить</button></div></div></div>
 
@@ -369,7 +380,7 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 
 <div id="modal-delete-confirm" class="modal"><div class="modal-content" style="text-align: center;"><h2 style="color: #ef5350; margin-bottom: 15px;">⚠️ Внимание!</h2><p style="font-size: 16px; margin-bottom: 20px; line-height: 1.5;">Вы точно хотите удалить?<br><b>Нельзя будет вернуть!</b></p><p id="delete-item-name" style="font-weight: bold; margin-bottom: 20px; color: #90caf9;"></p><div style="display: flex; gap: 10px; justify-content: center;"><button class="btn-cancel-confirm" onclick="closeModal('modal-delete-confirm')">Отмена</button><button class="btn-danger-confirm" id="btn-confirm-delete">Удалить</button></div></div></div>
 
-<div id="modal-delete-setlist-choice" class="modal"><div class="modal-content" style="text-align: center;"><h2 style="color: #ef5350; margin-bottom: 15px;">Что сделать с сет-листом?</h2><p id="delete-setlist-name" style="font-weight: bold; margin-bottom: 25px; color: #90caf9; font-size: 18px;"></p><div style="display: flex; flex-direction: column; gap: 12px;"><button class="btn-archive-sl" onclick="archiveSetlistChoice()">📦 Отправить в архив</button><button class="btn-danger-confirm" onclick="deleteSetlistChoice()">️ Удалить навсегда</button><button class="btn-cancel-confirm" onclick="closeModal('modal-delete-setlist-choice')">Отмена</button></div></div></div>
+<div id="modal-delete-setlist-choice" class="modal"><div class="modal-content" style="text-align: center;"><h2 style="color: #ef5350; margin-bottom: 15px;">Что сделать с сет-листом?</h2><p id="delete-setlist-name" style="font-weight: bold; margin-bottom: 25px; color: #90caf9; font-size: 18px;"></p><div style="display: flex; flex-direction: column; gap: 12px;"><button class="btn-archive-sl" onclick="archiveSetlistChoice()">📦 Отправить в архив</button><button class="btn-danger-confirm" onclick="deleteSetlistChoice()">🗑️ Удалить навсегда</button><button class="btn-cancel-confirm" onclick="closeModal('modal-delete-setlist-choice')">Отмена</button></div></div></div>
 
 <div id="modal-archive-setlist" class="modal"><div class="modal-content" style="text-align: center;"><h2 style="color: #90caf9; margin-bottom: 15px;">Восстановить сет-лист?</h2><p id="archive-setlist-name" style="font-weight: bold; margin-bottom: 25px; color: #90caf9; font-size: 18px;"></p><div style="display: flex; flex-direction: column; gap: 12px;"><button class="btn-main" onclick="restoreSetlistChoice()">✅ Восстановить</button><button class="btn-cancel-confirm" onclick="closeModal('modal-archive-setlist')">Отмена</button></div></div></div>
 
@@ -404,7 +415,8 @@ const NOTES_SHARP = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#',
 const NOTES_FLAT = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'H'];
 const CHORD_RE = /^[A-H][#b]?(m|M|maj|min|dim|aug|sus|add|7|9|11|13|6|2|4|5|7sus4|sus2|sus4|maj7|min7|m7b5|dim7|aug7)?[a-z0-9]*(?:\/[A-H][#b]?(m|M|maj|min|dim|aug|sus|add|7|9|11|13|6|2|4|5|7sus4|sus2|sus4|maj7|min7|m7b5|dim7|aug7)?[a-z0-9]*)?$/i;
 const REPEAT_RE = /^(x\d+|\d+[рpx])$/i;
-const SECTION_RE = /^(\d+\s+)?(КУПЛЕТ|VERSE|ПРИПЕВ|CHORUS|BRIDGE|БРИДЖ|INTRO|ИНТРО|ВСТУПЛЕНИЕ|КОДА|CODA|ФИНАЛ|OUTRO|ЗАПЕВ|ПЕРЕХОД|PRECHORUS|ПРЕДПРИПЕВ|ПРЕД-ПРИПЕВ|ПРОИГРЫШ|ИНСТРУМЕНТАЛ|INSTRUMENTAL|INTERLUDE|SOLO|МОСТ|TAG|2\s*ПРИПЕВ|ПРИПЕВ\s*2)(\s*\d+)?:/i;
+// Расширенный список секций: добавлены МОСТ, МОСТИК, КОНЦОВКА, ПРЕД-ПРИПЕВ, ПОСТ-ПРИПЕВ, ВСТАВКА, ЗАПЕВ и др.
+const SECTION_RE = /^(\d+\s+)?(КУПЛЕТ|VERSE|ПРИПЕВ|CHORUS|BRIDGE|БРИДЖ|МОСТ|МОСТИК|INTRO|ИНТРО|ВСТУПЛЕНИЕ|КОДА|CODA|КОНЦОВКА|ФИНАЛ|OUTRO|ЗАПЕВ|ВСТАВКА|ПЕРЕХОД|PRECHORUS|ПРЕДПРИПЕВ|ПРЕД-ПРИПЕВ|ПОСТ-ПРИПЕВ|ПОСТПРИПЕВ|POSTCHORUS|ПРОИГРЫШ|ИНСТРУМЕНТАЛ|INSTRUMENTAL|INTERLUDE|SOLO|СОЛО|TAG|2\s*ПРИПЕВ|ПРИПЕВ\s*2)(\s*\d+)?:/i;
 const IMAGE_COMMENT_PLACEHOLDER = 'Нажмите, чтобы добавить комментарий...';
 
 function convertBtoH(chord) { if (chord.includes('/')) { const parts = chord.split('/'); return convertBtoH(parts[0]) + '/' + convertBtoH(parts[1]); } if (chord.startsWith('B') && !chord.startsWith('Bb')) return 'H' + chord.substring(1); return chord; }
@@ -593,7 +605,8 @@ setlists.filter(sl => (currentTab === 'archive' ? sl.isArchived : !sl.isArchived
 const div = document.createElement('div');
 div.className = 'list-item';
 div.style.cursor = 'default';
-let actions = sl.isArchived ? `<button class="btn-icon" onclick="event.stopPropagation(); restoreSetlist(${sl.id})">🔄</button><button class="btn-icon" onclick="event.stopPropagation(); showSetlistDeleteChoice(${sl.id}, '${sl.name.replace(/'/g, "\\'")}', false)">️</button>` : `<button class="btn-icon" onclick="event.stopPropagation(); openEditSetlistModal(${sl.id})">✏️</button><button class="btn-icon" onclick="event.stopPropagation(); showSetlistDeleteChoice(${sl.id}, '${sl.name.replace(/'/g, "\\'")}', false)">️</button>`;
+// БАГ исправлен: возвращена иконка корзины 🗑️ на кнопку удаления
+let actions = sl.isArchived ? `<button class="btn-icon" onclick="event.stopPropagation(); restoreSetlist(${sl.id})">🔄</button><button class="btn-icon" onclick="event.stopPropagation(); showSetlistDeleteChoice(${sl.id}, '${sl.name.replace(/'/g, "\\'")}', false)">🗑️</button>` : `<button class="btn-icon" onclick="event.stopPropagation(); openEditSetlistModal(${sl.id})">✏️</button><button class="btn-icon" onclick="event.stopPropagation(); showSetlistDeleteChoice(${sl.id}, '${sl.name.replace(/'/g, "\\'")}', false)">🗑️</button>`;
 div.innerHTML = `<div class="item-left" style="min-width: 0; flex: 1;"><div class="item-title">${sl.name}</div><div class="item-sub" style="color: ${dateColor};">${formatSetlistDate(sl.date)}</div><div class="item-sub">${sl.songs.length} песен</div></div><div class="item-actions" style="display: flex; gap: 4px; flex-direction: row; align-items: center;">${actions}</div>`;
 div.onclick = () => openSetlistDetail(sl.id);
 list.appendChild(div);
@@ -920,6 +933,53 @@ if (body.classList.contains('dark')) { body.classList.remove('dark'); body.class
 else { body.classList.remove('light'); body.classList.add('dark'); updateThemeButtons('🌙'); localStorage.setItem('clc_theme', 'dark'); }
 }
 
+// НОВАЯ ФУНКЦИЯ: Копирование текста песни и аккордов в буфер обмена
+function copySongText() {
+  const s = songs.find(x => x.id === currentSongId);
+  if (!s) { alert('❌ Песня не найдена'); return; }
+  let textToCopy = s.chordpro;
+  if (currentSlId) {
+    const sl = setlists.find(x => x.id === currentSlId);
+    const item = sl.songs.find(x => x.id === currentSongId);
+    if (item && item.chordpro) textToCopy = item.chordpro;
+  }
+  // Если есть транспонирование, применяем его к тексту
+  if (currentKey && originalKey && currentKey !== originalKey) {
+    textToCopy = transposeChordproText(textToCopy, originalKey, currentKey);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      alert('✅ Текст песни скопирован в буфер обмена!');
+    }).catch(() => {
+      fallbackCopy(textToCopy);
+    });
+  } else {
+    fallbackCopy(textToCopy);
+  }
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.left = '-9999px';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  try {
+    const successful = document.execCommand('copy');
+    if (successful) {
+      alert('✅ Текст песни скопирован в буфер обмена!');
+    } else {
+      alert('❌ Не удалось скопировать текст');
+    }
+  } catch (err) {
+    alert('❌ Не удалось скопировать текст');
+  }
+  document.body.removeChild(textarea);
+}
+
 function downloadPdf() {
 const s = songs.find(x => x.id === currentSongId);
 if (!s) return;
@@ -999,12 +1059,18 @@ printWindow.document.close();
 function downloadJson(data, filename) { const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
 async function shareFile(data, filename) { const file = new File([JSON.stringify(data, null, 2)], filename, { type: 'application/json' }); if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], title: filename, text: `Файл для Worship SetUP: ${filename}` }); return; } catch (err) { if (err.name !== 'AbortError') downloadJson(data, filename); } } else { downloadJson(data, filename); } }
 
+// ИЗМЕНЕНО: Запрос имени файла при экспорте сет-листа
 function exportSetlist() {
 if (!currentSlId) return;
 const sl = setlists.find(x => x.id === currentSlId);
 if (!sl) return;
+const defaultName = sl.name || 'setlist';
+const fileName = prompt('Имя файла для экспорта сет-листа:', defaultName);
+if (fileName === null) return;
+const cleanName = fileName.trim() || defaultName;
+const finalName = cleanName.toLowerCase().endsWith('.clcsetlist') ? cleanName : cleanName + '.clcsetlist';
 const exportSongsList = sl.songs.map(item => { const s = songs.find(x => x.id === item.id); if (!s) return null; let chordpro = item.chordpro || s.chordpro, key = item.key || s.key; if (item.capo && item.capo > 0 && key) { key = NOTES_SHARP[((NOTES_SHARP.indexOf(key) + item.capo) % 12 + 12) % 12]; chordpro = transposeChordproText(chordpro, s.key, key); } return { title: s.title, author: s.author || '', key: key, originalKey: s.key, bpm: s.bpm || '', chordpro: chordpro }; }).filter(x => x !== null);
-shareFile({ version: 1, type: 'setlist', app: 'Worship SetUP', data: { date: sl.date, name: sl.name, songs: exportSongsList } }, `${sl.name}.clcsetlist`);
+shareFile({ version: 1, type: 'setlist', app: 'Worship SetUP', data: { date: sl.date, name: sl.name, songs: exportSongsList } }, finalName);
 }
 
 function handleImportSetlist(event) {
@@ -1014,7 +1080,30 @@ reader.onload = (e) => { try { const data = JSON.parse(e.target.result); if (dat
 reader.readAsText(file); event.target.value = '';
 }
 
-function exportSong() { const s = songs.find(x => x.id === currentSongId); if (!s) return; let chordpro = s.chordpro, key = s.key; if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl.songs.find(x => x.id === currentSongId); if (item) { if (item.chordpro) chordpro = item.chordpro; if (item.capo && item.capo > 0 && key) { key = NOTES_SHARP[((NOTES_SHARP.indexOf(key) + item.capo) % 12 + 12) % 12]; chordpro = transposeChordproText(chordpro, s.key, key); } } } shareFile({ version: 1, type: 'song', app: 'Worship SetUP', data: { title: s.title, author: s.author || '', key: s.key, bpm: s.bpm || '', chordpro: chordpro } }, `${s.title}.clcsong`); }
+// ИЗМЕНЕНО: Запрос имени файла при экспорте песни
+function exportSong() { 
+  const s = songs.find(x => x.id === currentSongId); 
+  if (!s) return; 
+  let chordpro = s.chordpro, key = s.key; 
+  if (currentSlId) { 
+    const sl = setlists.find(x => x.id === currentSlId); 
+    const item = sl.songs.find(x => x.id === currentSongId); 
+    if (item) { 
+      if (item.chordpro) chordpro = item.chordpro; 
+      if (item.key) key = item.key; 
+      if (item.capo && item.capo > 0 && key) { 
+        key = NOTES_SHARP[((NOTES_SHARP.indexOf(key) + item.capo) % 12 + 12) % 12]; 
+        chordpro = transposeChordproText(chordpro, s.key, key); 
+      } 
+    } 
+  }
+  const defaultName = s.title || 'song';
+  const fileName = prompt('Имя файла для экспорта песни:', defaultName);
+  if (fileName === null) return;
+  const cleanName = fileName.trim() || defaultName;
+  const finalName = cleanName.toLowerCase().endsWith('.clcsong') ? cleanName : cleanName + '.clcsong';
+  shareFile({ version: 1, type: 'song', app: 'Worship SetUP', data: { title: s.title, author: s.author || '', key: s.key, bpm: s.bpm || '', chordpro: chordpro } }, finalName); 
+}
 
 function handleImportSong(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { try { const data = JSON.parse(e.target.result); if (data.type !== 'song' || !data.data) { alert(' Это не файл песни'); return; } const songData = data.data; const existing = songs.find(s => s.title.toLowerCase() === songData.title.toLowerCase()); if (existing) { if (!confirm(`Песня "${songData.title}" уже существует. Заменить её?`)) return; existing.author = songData.author || existing.author; existing.key = songData.key; existing.bpm = songData.bpm || ''; existing.chordpro = songData.chordpro; } else { const newId = songs.length > 0 ? songs.reduce((max, s) => Math.max(max, s.id), 0) + 1 : 1; songs.push({ id: newId, title: songData.title, author: songData.author || '', key: songData.key, bpm: songData.bpm || '', chordpro: songData.chordpro, createdAt: Date.now(), columns: currentColumns, fontSize: fontSize }); } saveToStorage(); renderSongs(); alert(`✅ Песня "${songData.title}" импортирована!`); } catch (err) { alert('❌ Ошибка при чтении файла: ' + err.message); } }; reader.readAsText(file); event.target.value = ''; }
 
