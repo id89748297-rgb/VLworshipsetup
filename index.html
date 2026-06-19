@@ -21,11 +21,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { touch-action: manipulation; }
 body { font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #121212; color: #eee; padding: 15px; padding-top: calc(env(safe-area-inset-top, 0px) + 15px); padding-bottom: 80px; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
-/* На мобильных — запрет выделения для корректных свайпов */
 @media (hover: none), (max-width: 768px) {
   body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 }
-/* На десктопе — разрешение выделения и копирования */
 @media (hover: hover) and (pointer: fine) and (min-width: 769px) {
   body { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; cursor: default; }
   .chords-above, .lyrics-below, .section-label, .song-section, .song-content, .right-note, .song-image-comment, .section-note-input, .inline-comment-input, .pdf-body, .instruction-card-text {
@@ -37,6 +35,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; ba
     -webkit-user-select: text !important;
     user-select: text !important;
   }
+  /* На десктопе — визуальная подсказка, что блок можно редактировать двойным кликом */
+  .song-section { cursor: text; transition: background 0.15s; }
+  .song-section:hover { background: rgba(149, 117, 205, 0.08); }
+  body.light .song-section:hover { background: rgba(126, 87, 194, 0.08); }
 }
 body.light { background: #F5F5DC; color: #333; }
 body.light::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top, 20px); background: #2a2a2a; z-index: 9999; pointer-events: none; }
@@ -285,7 +287,7 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">👆</span><span class="instruction-card-title">Свайпы для навигации</span></div><div class="instruction-card-text">• На странице <b>песни</b>: свайп влево/вправо переключает между песнями в сет-листе<br>• На <b>главной</b>: свайп переключает «Песни» ↔ «Сет-листы»<br>• <b>Свайп влево</b> = вернуться назад</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">💬</span><span class="instruction-card-title">Комментарии к строкам</span></div><div class="instruction-card-text">Поставьте <code>**</code> в конце строки — справа появится поле для комментария (до 12 символов).</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">️</span><span class="instruction-card-title">Картинки в песнях</span></div><div class="instruction-card-text">Напишите <code>Картинка:</code> на отдельной строке — появится кнопка загрузки изображения.</div></div>
-<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">✏️</span><span class="instruction-card-title">Редактирование блоков</span></div><div class="instruction-card-text"><b>Нажмите и удерживайте 1 секунду</b> на блоке — откроется редактор именно этого блока.</div></div>
+<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">✏️</span><span class="instruction-card-title">Редактирование блоков</span></div><div class="instruction-card-text">📱 <b>На телефоне</b>: <b>нажмите и удерживайте 1 секунду</b> на блоке<br>💻 <b>На компьютере</b>: <b>двойной клик мышью</b> по блоку<br>Откроется редактор именно этого блока.</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">🎵</span><span class="instruction-card-title">Локальные изменения в сет-листе</span></div><div class="instruction-card-text">В сет-листе можно менять тональность, Capo и текст — только для этого сет-листа. Помечается «(лок.)».</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">📝</span><span class="instruction-card-title">Заметки на секциях</span></div><div class="instruction-card-text">В правом верхнем углу блока — поле для короткой заметки (до 12 символов).</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">🎸</span><span class="instruction-card-title">Capo и транспонирование</span></div><div class="instruction-card-text">Меняйте тональность — аккорды пересчитаются. <b>Capo</b> тоже транспонирует. Работает с <code>D/F#</code>.</div></div>
@@ -674,15 +676,40 @@ if (filtered.length === 0) { list.innerHTML = '<p style="color: #888; text-align
 filtered.forEach(s => { const div = document.createElement('div'); div.className = 'add-song-item'; div.style.cursor = 'pointer'; div.innerHTML = `<span>${s.title}${s.key ? ` [${s.key}]` : ''}</span><span style="color: #90caf9; font-size: 20px;">+</span>`; div.onclick = () => { sl.songs.push({id: s.id, capo: 0, key: null, chordpro: null, columns: currentColumns, fontSize: fontSize}); saveToStorage(); renderAddSongList(); renderSlSongs(); }; list.appendChild(div); });
 }
 
+// Свайпы работают ТОЛЬКО на тач-устройствах (телефоны/планшеты)
 function setupSwipe() {
+if (!('ontouchstart' in window) && !navigator.maxTouchPoints) return;
+
 let startX = 0, startY = 0, tracking = false, currentPageId = null, isClick = false;
 function getCurrentPageId() { const active = document.querySelector('.page.active'); return active ? active.id : null; }
-document.addEventListener('touchstart', (e) => { if (e.target.closest('.modal')) return; if (e.target.closest('[contenteditable="true"]')) return; if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return; startX = e.touches[0].clientX; startY = e.touches[0].clientY; tracking = true; isClick = true; currentPageId = getCurrentPageId(); }, { passive: true });
-document.addEventListener('touchmove', (e) => { if (!tracking) return; const diffX = Math.abs(startX - e.touches[0].clientX); const diffY = Math.abs(startY - e.touches[0].clientY); if (diffX > 10 || diffY > 10) isClick = false; }, { passive: true });
-document.addEventListener('touchend', (e) => { if (!tracking) return; tracking = false; if (isClick) return; const diffX = startX - e.changedTouches[0].clientX; const diffY = startY - e.changedTouches[0].clientY; if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) handleSwipe(diffX, currentPageId); }, { passive: true });
-document.addEventListener('mousedown', (e) => { if (e.target.closest('.modal')) return; if (e.target.closest('[contenteditable="true"]')) return; if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return; startX = e.clientX; startY = e.clientY; tracking = true; isClick = true; currentPageId = getCurrentPageId(); });
-document.addEventListener('mousemove', (e) => { if (!tracking) return; const diffX = Math.abs(startX - e.clientX); const diffY = Math.abs(startY - e.clientY); if (diffX > 10 || diffY > 10) isClick = false; });
-document.addEventListener('mouseup', (e) => { if (!tracking) return; tracking = false; if (isClick) return; const diffX = startX - e.clientX; const diffY = startY - e.clientY; if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) handleSwipe(diffX, currentPageId); });
+
+document.addEventListener('touchstart', (e) => {
+if (e.target.closest('.modal')) return;
+if (e.target.closest('[contenteditable="true"]')) return;
+if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+startX = e.touches[0].clientX;
+startY = e.touches[0].clientY;
+tracking = true;
+isClick = true;
+currentPageId = getCurrentPageId();
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+if (!tracking) return;
+const diffX = Math.abs(startX - e.touches[0].clientX);
+const diffY = Math.abs(startY - e.touches[0].clientY);
+if (diffX > 10 || diffY > 10) isClick = false;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+if (!tracking) return;
+tracking = false;
+if (isClick) return;
+const diffX = startX - e.changedTouches[0].clientX;
+const diffY = startY - e.changedTouches[0].clientY;
+if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) handleSwipe(diffX, currentPageId);
+}, { passive: true });
+
 function handleSwipe(diffX, pageId) {
 if (pageId === 'page-song-view') {
 if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); if (!sl) return; const idx = sl.songs.findIndex(x => x.id === currentSongId); const isLastSong = (idx === sl.songs.length - 1); const isFirstSong = (idx === 0); if (diffX > 0) { if (isLastSong) goBackFromSong(); else nextSong(); } else { if (isFirstSong) goBackFromSong(); else prevSong(); } }
@@ -738,7 +765,8 @@ document.getElementById('btn-save-all').style.display = 'block';
 const sidePrev = document.getElementById('side-prev');
 const sideNext = document.getElementById('side-next');
 const swipeHint = document.getElementById('swipe-hint');
-if (slId) { const sl = setlists.find(x => x.id === slId); const idx = sl.songs.findIndex(x => x.id === id); sidePrev.classList.add('visible'); sideNext.classList.add('visible'); sidePrev.disabled = idx <= 0; sideNext.disabled = idx >= sl.songs.length - 1; swipeHint.style.display = sl.songs.length > 1 ? 'block' : 'none'; }
+const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)').matches;
+if (slId) { const sl = setlists.find(x => x.id === slId); const idx = sl.songs.findIndex(x => x.id === id); sidePrev.classList.add('visible'); sideNext.classList.add('visible'); sidePrev.disabled = idx <= 0; sideNext.disabled = idx >= sl.songs.length - 1; swipeHint.style.display = (!isDesktop && sl.songs.length > 1) ? 'block' : 'none'; }
 else { sidePrev.classList.remove('visible'); sideNext.classList.remove('visible'); swipeHint.style.display = 'none'; }
 renderSongContent(localChordpro || s.chordpro, originalKey, currentKey, currentCapo);
 showPage('page-song-view');
@@ -935,17 +963,38 @@ flushSection();
 html += '</div>';
 document.getElementById('song-view-content').innerHTML = html;
 
+// Определяем тип устройства
+const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)').matches;
+const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints;
+
 document.querySelectorAll('.song-section').forEach(section => {
-  let pressTimer;
   const startLine = parseInt(section.dataset.startLine);
-  const startPress = (e) => { if (e.target.tagName === 'INPUT') return; pressTimer = setTimeout(() => { openSectionEditorByLine(startLine); if (navigator.vibrate) navigator.vibrate(20); }, 1000); };
-  const cancelPress = () => { clearTimeout(pressTimer); };
-  section.addEventListener('touchstart', startPress, { passive: true });
-  section.addEventListener('touchend', cancelPress);
-  section.addEventListener('touchcancel', cancelPress);
-  section.addEventListener('mousedown', startPress);
-  section.addEventListener('mouseup', cancelPress);
-  section.addEventListener('mouseleave', cancelPress);
+  
+  // На ТЕЛЕФОНЕ/ПЛАНШЕТЕ — долгое нажатие (1 сек) для редактирования блока
+  if (isTouchDevice && !isDesktop) {
+    let pressTimer;
+    const startPress = (e) => { 
+      if (e.target.tagName === 'INPUT') return; 
+      pressTimer = setTimeout(() => { 
+        openSectionEditorByLine(startLine); 
+        if (navigator.vibrate) navigator.vibrate(20); 
+      }, 1000); 
+    };
+    const cancelPress = () => { clearTimeout(pressTimer); };
+    section.addEventListener('touchstart', startPress, { passive: true });
+    section.addEventListener('touchend', cancelPress);
+    section.addEventListener('touchcancel', cancelPress);
+  }
+  
+  // На НОУТБУКЕ/ПК — двойной клик мышью для редактирования блока
+  if (isDesktop) {
+    section.addEventListener('dblclick', (e) => {
+      // Не срабатывает на полях ввода и кнопках
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') return;
+      if (e.target.closest('button, select, input, .song-image-comment')) return;
+      openSectionEditorByLine(startLine);
+    });
+  }
 });
 }
 
