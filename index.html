@@ -45,16 +45,19 @@ body.light .app-subtitle { color: #7e57c2; }
 .header-center .song-title-main { font-size: 16px; color: #90caf9; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 body.light .header-center .song-title-main { color: #0d47a1; }
 body.light .header-center .setlist-name-inline { color: #0d47a1; }
-.btn-back { background: #78909c; border: none; color: white; padding: 12px 16px; border-radius: 10px; font-size: 18px; cursor: pointer; min-width: 48px; min-height: 48px; display: flex; align-items: center; justify-content: center; touch-action: manipulation; }
-body.light .btn-back { background: #607d8b; color: #333; }
-.btn-edit-sl, .btn-add-song-top, .btn-archive-sl, .btn-share-sl { background: #9575cd; border: none; color: white; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; min-height: 48px; touch-action: manipulation; }
-body.light .btn-edit-sl, body.light .btn-add-song-top, body.light .btn-archive-sl, body.light .btn-share-sl { background: #b39ddb; color: #333; }
+.btn-back { background: #78909c; border: none; color: white; padding: 12px 16px; border-radius: 10px; font-size: 18px; cursor: pointer; min-width: 48px; min-height: 48px; display: flex; align-items: center; justify-content: center; touch-action: manipulation; transition: background 0.2s; }
+body.light .btn-back { background: #455a64; color: #ffffff; }
+body.light .btn-back:hover { background: #37474f; }
+.btn-edit-sl, .btn-add-song-top, .btn-archive-sl, .btn-share-sl { background: #9575cd; border: none; color: white; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; min-height: 48px; touch-action: manipulation; transition: background 0.2s; }
+body.light .btn-edit-sl, body.light .btn-add-song-top, body.light .btn-archive-sl, body.light .btn-share-sl { background: #7e57c2; color: #ffffff; }
+body.light .btn-edit-sl:hover, body.light .btn-add-song-top:hover, body.light .btn-archive-sl:hover, body.light .btn-share-sl:hover { background: #6a3fb5; }
 .search-box { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #444; background: #1e1e1e; color: #eee; font-size: 16px; margin-bottom: 15px; min-height: 48px; }
 body.light .search-box { background: white; color: #333; border-color: #ddd; }
 .btn-main { width: 100%; padding: 16px; background: #90caf9; color: #0d47a1; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 15px; min-height: 52px; touch-action: manipulation; }
 body.light .btn-main { background: #bbdefb; color: #0d47a1; }
-.btn-secondary { background: #78909c; color: white; border: none; padding: 12px 18px; border-radius: 10px; cursor: pointer; font-size: 16px; min-height: 48px; touch-action: manipulation; }
-body.light .btn-secondary { background: #cfd8dc; color: #333; }
+.btn-secondary { background: #78909c; color: white; border: none; padding: 12px 18px; border-radius: 10px; cursor: pointer; font-size: 16px; min-height: 48px; touch-action: manipulation; transition: background 0.2s; }
+body.light .btn-secondary { background: #90a4ae; color: #ffffff; }
+body.light .btn-secondary:hover { background: #78909c; }
 .btn-pastel {
   background: rgba(179, 157, 219, 0.1);
   color: #b39ddb;
@@ -70,17 +73,19 @@ body.light .btn-secondary { background: #cfd8dc; color: #333; }
 .btn-pastel:hover { background: rgba(179, 157, 219, 0.2); }
 .btn-pastel:active { opacity: 0.7; }
 body.light .btn-pastel {
-  background: rgba(149, 117, 205, 0.1);
-  color: #7e57c2;
-  border: 1px solid rgba(149, 117, 205, 0.3);
+  background: rgba(126, 87, 194, 0.25);
+  color: #4527a0;
+  border: 1px solid rgba(126, 87, 194, 0.5);
+  font-weight: 500;
 }
-body.light .btn-pastel:hover { background: rgba(149, 117, 205, 0.2); }
+body.light .btn-pastel:hover { background: rgba(126, 87, 194, 0.35); }
+body.light .btn-pastel:active { opacity: 0.8; }
 .home-actions-row .btn-secondary { font-size: 13px; padding: 10px 12px; }
 .home-actions-row .btn-pastel { font-size: 13px; padding: 10px 12px; }
 .tab { flex: 1; padding: 14px; text-align: center; background: #333; color: #eee; border-radius: 10px; cursor: pointer; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; touch-action: manipulation; line-height: 1.2; }
-body.light .tab { background: #e0e0e0; color: #333; }
+body.light .tab { background: rgba(126, 87, 194, 0.15); color: #4527a0; }
 .grid-btn.tab-style.active { background: #9575cd; color: #ffffff; }
-body.light .grid-btn.tab-style.active { background: #b39ddb; color: #ffffff; }
+body.light .grid-btn.tab-style.active { background: #7e57c2; color: #ffffff; }
 .list-item { background: #1e1e1e; padding: 12px 16px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: grab; box-shadow: 0 2px 4px rgba(0,0,0,0.3); min-height: 60px; touch-action: manipulation; transition: opacity 0.2s, transform 0.2s; }
 body.light .list-item { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 .list-item:active { transform: scale(0.98); }
@@ -96,27 +101,32 @@ body.light .order-input { background: #f0f0f0; border: 1px solid #ccc; color: #3
 .btn-icon { background: transparent; border: none; font-size: 22px; cursor: pointer; padding: 6px; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; touch-action: manipulation; z-index: 2; }
 .btn-icon:hover { background: rgba(255,255,255,0.05); }
 body.light .btn-icon:hover { background: rgba(0,0,0,0.05); }
-.theme-toggle { background: #78909c; border: none; color: white; width: 48px; height: 48px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); touch-action: manipulation; }
-body.light .theme-toggle { background: #607d8b; color: #333; }
+.theme-toggle { background: #78909c; border: none; color: white; width: 48px; height: 48px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); touch-action: manipulation; transition: background 0.2s; }
+body.light .theme-toggle { background: #455a64; color: #ffffff; }
+body.light .theme-toggle:hover { background: #37474f; }
 .vl-worship-btn { background: #9575cd; border: none; color: white; width: 48px; height: 48px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); font-weight: bold; touch-action: manipulation; transition: background 0.3s; }
 body.violet .vl-worship-btn { background: #757575; }
-body.light .vl-worship-btn { background: #b39ddb; color: #fff; }
-body.violet.light .vl-worship-btn { background: #9e9e9e; color: #fff; }
+body.light .vl-worship-btn { background: #7e57c2; color: #ffffff; }
+body.light .vl-worship-btn:hover { background: #6a3fb5; }
+body.violet.light .vl-worship-btn { background: #616161; color: #ffffff; }
+body.violet.light .vl-worship-btn:hover { background: #424242; }
 .song-toolbar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; padding: 12px; background: #1e1e1e; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 body.light .song-toolbar { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 .toolbar-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.toolbar-btn-item { height: 52px; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; touch-action: manipulation; background: rgba(55, 71, 79, 0.5); color: #eee; }
-body.light .toolbar-btn-item { background: rgba(207, 216, 220, 0.5); color: #333; }
+.toolbar-btn-item { height: 52px; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; touch-action: manipulation; background: rgba(55, 71, 79, 0.5); color: #eee; transition: background 0.2s; }
+body.light .toolbar-btn-item { background: rgba(120, 144, 156, 0.35); color: #263238; }
+body.light .toolbar-btn-item:hover { background: rgba(120, 144, 156, 0.5); }
 .toolbar-btn-item:active { opacity: 0.7; }
 .toolbar-select-item { height: 52px; border-radius: 10px; border: none; background: rgba(55, 71, 79, 0.5); color: #81D4FA; font-size: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; touch-action: manipulation; overflow: hidden; padding: 0 4px; }
 .toolbar-select-item span { font-size: 14px; }
-body.light .toolbar-select-item { background: rgba(207, 216, 220, 0.5); color: #1976D2; }
+body.light .toolbar-select-item { background: rgba(120, 144, 156, 0.35); color: #0d47a1; }
 body.dark .toolbar-select-item select { color: #81D4FA; }
 .toolbar-select-item select { background: transparent; border: none; color: inherit; font-size: 12px; font-weight: inherit; cursor: pointer; outline: none; width: 100%; text-align: center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
 .toolbar-select-item select option { background: #1e1e1e; color: #eee; }
 body.light .toolbar-select-item select option { background: white; color: #333; }
-.btn-save-all { background: rgba(129, 212, 250, 0.3); color: #81D4FA; border: 2px solid rgba(129, 212, 250, 0.6); padding: 12px 20px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold; width: 100%; min-height: 48px; touch-action: manipulation; display: none; margin-top: 8px; }
-body.light .btn-save-all { background: rgba(25, 118, 210, 0.1); color: #1976D2; border: 2px solid rgba(25, 118, 210, 0.6); }
+.btn-save-all { background: rgba(129, 212, 250, 0.3); color: #81D4FA; border: 2px solid rgba(129, 212, 250, 0.6); padding: 12px 20px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold; width: 100%; min-height: 48px; touch-action: manipulation; display: none; margin-top: 8px; transition: background 0.2s; }
+body.light .btn-save-all { background: rgba(25, 118, 210, 0.2); color: #0d47a1; border: 2px solid rgba(13, 71, 161, 0.7); font-weight: bold; }
+body.light .btn-save-all:hover { background: rgba(25, 118, 210, 0.3); }
 .song-content { max-width: 1400px; margin: 0 auto; }
 .song-columns-1 { column-count: 1; column-gap: 15px; }
 .song-columns-2 { column-count: 2; column-gap: 15px; }
@@ -150,6 +160,7 @@ body.light .inline-edit-area { background: white; color: #333; border-color: #7e
 .inline-edit-actions button { flex: 1; padding: 12px; border-radius: 10px; border: none; font-size: 15px; font-weight: bold; cursor: pointer; min-height: 48px; }
 .inline-save-btn { background: #4caf50; color: white; }
 .inline-cancel-btn { background: #78909c; color: white; }
+body.light .inline-cancel-btn { background: #90a4ae; color: white; }
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 15px; }
 .modal.show { display: flex; }
 .modal-content { background: #1e1e1e; color: #eee; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: auto; }
@@ -196,15 +207,16 @@ body.light .author-suggestion-item { border-bottom: 1px solid #ddd; }
 .grid-btn.btn-main-style, .grid-btn.btn-secondary-style { background: #78909c; color: #ffffff; }
 body.light .grid-btn.btn-main-style, body.light .grid-btn.btn-secondary-style { background: #cfd8dc; color: #333; }
 .grid-btn.tab-style { background: #333; color: #eee; }
-body.light .grid-btn.tab-style { background: #e0e0e0; color: #333; }
+body.light .grid-btn.tab-style { background: rgba(126, 87, 194, 0.15); color: #4527a0; }
 .btn-subtext { font-size: 10px; display: block; margin-top: 4px; line-height: 1; font-weight: normal; }
 body.dark .btn-subtext { color: #ffffff; }
-body.light .btn-subtext { color: #333333; }
+body.light .btn-subtext { color: #4527a0; }
 .song-image-container { margin: 0 0 15px 0; padding: 0; background: transparent; border: none; border-radius: 0; text-align: center; position: relative; width: 100%; }
 body.light .song-image-container { background: transparent; }
 .song-image-container img { width: 100%; height: auto; border-radius: 0; margin: 0; padding: 0; cursor: pointer; display: block; }
-.song-image-upload { display: inline-block; padding: 12px 24px; background: #9575cd; color: white; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; }
-body.light .song-image-upload { background: #b39ddb; color: #333; }
+.song-image-upload { display: inline-block; padding: 12px 24px; background: #9575cd; color: white; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; transition: background 0.2s; }
+body.light .song-image-upload { background: #7e57c2; color: #ffffff; }
+body.light .song-image-upload:hover { background: #6a3fb5; }
 .song-image-upload input[type="file"] { display: none; }
 .song-image-comment { margin: 0; padding: 8px; background: rgba(144, 202, 249, 0.1); border: 1px solid rgba(144, 202, 249, 0.4); border-radius: 6px; font-size: 12px; color: #90caf9; font-style: italic; cursor: text; user-select: text; -webkit-user-select: text; outline: none; min-height: 20px; text-align: center; }
 body.light .song-image-comment { background: rgba(25, 118, 210, 0.1); border-color: rgba(25, 118, 210, 0.4); color: #1976D2; }
@@ -313,7 +325,7 @@ body { padding: 10px; font-size: 14px; padding-top: calc(env(safe-area-inset-top
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">👆</span><span class="instruction-card-title">Свайпы для навигации</span></div><div class="instruction-card-text">• На странице <b>песни</b>: свайп влево/вправо переключает между песнями в сет-листе<br>• На <b>главной</b>: свайп переключает «Песни» ↔ «Сет-листы»<br>• <b>Свайп влево</b> = вернуться назад</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">💬</span><span class="instruction-card-title">Комментарии к строкам</span></div><div class="instruction-card-text">Поставьте <code>**</code> в конце строки — справа появится поле для комментария (до 12 символов).</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">️</span><span class="instruction-card-title">Картинки в песнях</span></div><div class="instruction-card-text">Напишите <code>Картинка:</code> на отдельной строке — появится кнопка загрузки изображения.</div></div>
-<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">✏️</span><span class="instruction-card-title">Редактирование блоков</span></div><div class="instruction-card-text">📱 <b>На телефоне</b>: <b>нажмите и удерживайте 1 секунду</b> на блоке<br>💻 <b>На компьютере</b>: <b>двойной клик мышью</b> по блоку<br>Откроется редактор именно этого блока.</div></div>
+<div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">✏️</span><span class="instruction-card-title">Редактирование блоков</span></div><div class="instruction-card-text">📱 <b>На телефоне</b>: <b>нажмите и удерживайте 1 секунду</b> на блоке<br>💻 <b>На компьютере</b>: <b>двойной клик мышью</b> по блоку<br>После сохранения просмотр остаётся в том же месте.</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">🎵</span><span class="instruction-card-title">Локальные изменения в сет-листе</span></div><div class="instruction-card-text">В сет-листе можно менять тональность, Capo и текст — только для этого сет-листа. Помечается «(лок.)». При отправке сет-листа Capo сохраняется для получателя.</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">📝</span><span class="instruction-card-title">Заметки на секциях</span></div><div class="instruction-card-text">В правом верхнем углу блока — поле для короткой заметки (до 12 символов).</div></div>
 <div class="instruction-card"><div class="instruction-card-header"><span class="instruction-card-icon">🎼</span><span class="instruction-card-title">Дополнения к заголовкам</span></div><div class="instruction-card-text">После заголовка секции можно добавить информацию через двоеточие:<br>• <code>ПРИПЕВ: x2</code> — повтор 2 раза<br>• <code>БРИДЖ: ALL IN</code> — играть всем<br>• <code>КОНЕЦ: затухание</code> — инструкция к концу<br>Текст после двоеточия отображается обычным шрифтом (не жирным).</div></div>
@@ -474,12 +486,13 @@ let currentAccidental = 'sharp';
 let currentHideChords = false;
 let currentHideArrows = false;
 let toolbarExpanded = false;
+// === ИЗМЕНЕНИЕ 1: Переменная для сохранения позиции прокрутки ===
+let savedScrollPosition = 0;
 
 const NOTES_SHARP = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H'];
 const NOTES_FLAT = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'H'];
 const CHORD_RE = /^[A-H][#b]?(m|M|maj|min|dim|aug|sus|add|7|9|11|13|6|2|4|5|7sus4|sus2|sus4|maj7|min7|m7b5|dim7|aug7)?[0-9b]*(?:\/[A-H][#b]?(m|M|maj|min|dim|aug|sus|add|7|9|11|13|6|2|4|5|7sus4|sus2|sus4|maj7|min7|m7b5|dim7|aug7)?[0-9b]*)?$/i;
 const REPEAT_RE = /^(x\d+|\d+[рpx])$/i;
-// === ИЗМЕНЕНИЕ 2: Добавлены КОНЕЦ, ЗАКАНЧИВАЕМ, ПРЕД ПРИПЕВ ===
 const SECTION_RE = /^(\d+\s+)?(КУПЛЕТ|VERSE|ПРИПЕВ|CHORUS|BRIDGE|БРИДЖ|INTRO|ИНТРО|ВСТУПЛЕНИЕ|КОДА|CODA|ФИНАЛ|OUTRO|ЗАПЕВ|ПЕРЕХОД|PRECHORUS|ПРЕДПРИПЕВ|ПРЕД-ПРИПЕВ|ПРЕД ПРИПЕВ|ПОСТ ПРИПЕВ|ПОСТ-ПРИПЕВ|ПРОИГРЫШ|ИНСТРУМЕНТАЛ|INSTRUMENTAL|INTERLUDE|SOLO|МОСТ|МОСТИК|TAG|2\s*ПРИПЕВ|ПРИПЕВ\s*2|КОНЦОВКА|КОНЕЦ|ЗАКАНЧИВАЕМ|ВСТАВКА)(\s*\d+)?:/i;
 const IMAGE_COMMENT_PLACEHOLDER = 'Нажмите, чтобы добавить комментарий...';
 
@@ -524,7 +537,6 @@ function processChordLabels(chords) {
   });
 }
 
-// === ИЗМЕНЕНИЕ 1: Защита скобок с пробелами при парсинге ===
 function parseMixedLine(line) {
   let rightNote = '', inlineComment = '';
   const doubleStarMatch = line.match(/\s*\*\*\s*$/);
@@ -532,7 +544,6 @@ function parseMixedLine(line) {
   const starMatch = line.match(/\s+\*(.+)$/);
   if (starMatch) { rightNote = starMatch[1].trim(); line = line.substring(0, line.length - starMatch[0].length); }
 
-  // Защищаем содержимое скобок от разбивки по пробелам
   const parens = [];
   const protectedLine = line.replace(/\([^)]+\)/g, (match) => {
     parens.push(match);
@@ -547,7 +558,7 @@ function parseMixedLine(line) {
   const allChords = tokens.length > 0 && tokens.every(t => {
     if (t === '|' || /^\/{1,8}$/.test(t) || REPEAT_RE.test(t)) return true;
     if (PAIR_RE.test(t)) return true;
-    if (/^\x01P\d+\x01$/.test(t)) return true; // placeholder скобки = допустимый токен
+    if (/^\x01P\d+\x01$/.test(t)) return true;
     return CHORD_RE.test(convertBtoH(cleanWordForChordCheck(t)));
   });
 
@@ -796,9 +807,10 @@ const setlistNameEl = document.getElementById('song-view-setlist-name');
 if (slId) { const sl = setlists.find(x => x.id === slId); setlistNameEl.innerText = `📋 ${sl.name} (${formatSetlistDate(sl.date, sl.time)})`; setlistNameEl.style.display = 'block'; } else { setlistNameEl.style.display = 'none'; }
 originalKey = s.key || 'C'; currentCapo = 0;
 const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)').matches;
-currentColumns = isDesktop ? 2 : (s.columns || currentColumns);
+// === ИЗМЕНЕНИЕ 2: Используем дефолт 1 вместо currentColumns ===
+currentColumns = isDesktop ? 2 : (s.columns || 1);
 fontSize = s.fontSize || fontSize; currentAccidental = s.accidental || 'sharp'; currentHideChords = s.hideChords || false;
-if (slId) { const sl = setlists.find(x => x.id === slId); const item = sl.songs.find(x => x.id === id); if (item) { currentCapo = item.capo || 0; const savedKey = item.key || null; if (!isDesktop) currentColumns = item.columns || currentColumns; fontSize = item.fontSize || fontSize; currentKey = savedKey || originalKey; currentAccidental = item.accidental || s.accidental || 'sharp'; currentHideChords = item.hideChords !== undefined ? item.hideChords : (s.hideChords || false); } else { currentKey = originalKey; } }
+if (slId) { const sl = setlists.find(x => x.id === slId); const item = sl.songs.find(x => x.id === id); if (item) { currentCapo = item.capo || 0; const savedKey = item.key || null; if (!isDesktop) currentColumns = item.columns || s.columns || 1; fontSize = item.fontSize || fontSize; currentKey = savedKey || originalKey; currentAccidental = item.accidental || s.accidental || 'sharp'; currentHideChords = item.hideChords !== undefined ? item.hideChords : (s.hideChords || false); } else { currentKey = originalKey; } }
 else { currentKey = originalKey; }
 fillKeySelect('key-select', currentKey, true); document.getElementById('capo-select').value = currentCapo; syncColumnsSelects(currentColumns);
 document.getElementById('btn-accidental').innerText = currentAccidental === 'sharp' ? '♯' : '♭'; document.getElementById('btn-save-all').style.display = 'block';
@@ -854,8 +866,53 @@ const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min
 document.querySelectorAll('.song-section').forEach(section => { const startLine = parseInt(section.dataset.startLine); if (isTouch && !isDesktop) { let pt; section.addEventListener('touchstart', (e) => { if (e.target.tagName === 'INPUT') return; pt = setTimeout(() => { openSectionEditorByLine(startLine); if (navigator.vibrate) navigator.vibrate(20); }, 1000); }, { passive: true }); section.addEventListener('touchend', () => clearTimeout(pt)); section.addEventListener('touchcancel', () => clearTimeout(pt)); } if (isDesktop) section.addEventListener('dblclick', (e) => { if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT' || e.target.closest('button, select, input, .song-image-comment')) return; openSectionEditorByLine(startLine); }); });
 }
 
-function openSectionEditorByLine(startLine) { const s = songs.find(x => x.id === currentSongId); if (!s) return; let text = s.chordpro; if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl?.songs.find(x => x.id === currentSongId); if (item?.chordpro) text = item.chordpro; } const lines = text.split('\n'); let sectionLines = [], endIdx = lines.length; for (let i = startLine + 1; i < lines.length; i++) { if (lines[i].trim().match(SECTION_RE)) { endIdx = i; break; } sectionLines.push(lines[i]); } editingSectionStartLine = startLine; editingSectionEndLine = endIdx; document.getElementById('section-edit-label').value = lines[startLine].trim(); document.getElementById('section-edit-content').value = sectionLines.join('\n'); document.getElementById('modal-section-edit').classList.add('show'); }
-function saveSectionEdit() { const s = songs.find(x => x.id === currentSongId); if (!s) return; let text = s.chordpro; if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl?.songs.find(x => x.id === currentSongId); if (item?.chordpro) text = item.chordpro; } const lines = text.split('\n'); const newLabel = document.getElementById('section-edit-label').value.trim(); const newContent = document.getElementById('section-edit-content').value; if (editingSectionStartLine < 0) return; const newLines = [...lines]; newLines.splice(editingSectionStartLine, editingSectionEndLine - editingSectionStartLine, newLabel, newContent); const newText = newLines.join('\n'); if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl?.songs.find(x => x.id === currentSongId); if (item) item.chordpro = newText; } else s.chordpro = newText; saveToStorage(); closeModal('modal-section-edit'); openSongView(currentSongId, currentSlId); }
+// === ИЗМЕНЕНИЕ 1: Сохраняем позицию прокрутки перед редактированием ===
+function openSectionEditorByLine(startLine) { 
+  // Сохраняем текущую позицию прокрутки
+  savedScrollPosition = window.scrollY;
+  
+  const s = songs.find(x => x.id === currentSongId); if (!s) return; 
+  let text = s.chordpro; 
+  if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl?.songs.find(x => x.id === currentSongId); if (item?.chordpro) text = item.chordpro; } 
+  const lines = text.split('\n'); 
+  let sectionLines = [], endIdx = lines.length; 
+  for (let i = startLine + 1; i < lines.length; i++) { 
+    if (lines[i].trim().match(SECTION_RE)) { endIdx = i; break; } 
+    sectionLines.push(lines[i]); 
+  } 
+  editingSectionStartLine = startLine; 
+  editingSectionEndLine = endIdx; 
+  document.getElementById('section-edit-label').value = lines[startLine].trim(); 
+  document.getElementById('section-edit-content').value = sectionLines.join('\n'); 
+  document.getElementById('modal-section-edit').classList.add('show'); 
+}
+
+// === ИЗМЕНЕНИЕ 1: Восстанавливаем позицию прокрутки после сохранения ===
+function saveSectionEdit() { 
+  const s = songs.find(x => x.id === currentSongId); if (!s) return; 
+  let text = s.chordpro; 
+  if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl?.songs.find(x => x.id === currentSongId); if (item?.chordpro) text = item.chordpro; } 
+  const lines = text.split('\n'); 
+  const newLabel = document.getElementById('section-edit-label').value.trim(); 
+  const newContent = document.getElementById('section-edit-content').value; 
+  if (editingSectionStartLine < 0) return; 
+  const newLines = [...lines]; 
+  newLines.splice(editingSectionStartLine, editingSectionEndLine - editingSectionStartLine, newLabel, newContent); 
+  const newText = newLines.join('\n'); 
+  if (currentSlId) { const sl = setlists.find(x => x.id === currentSlId); const item = sl?.songs.find(x => x.id === currentSongId); if (item) item.chordpro = newText; } 
+  else s.chordpro = newText; 
+  saveToStorage(); 
+  closeModal('modal-section-edit'); 
+  openSongView(currentSongId, currentSlId); 
+  
+  // Восстанавливаем позицию прокрутки после рендеринга
+  const scrollPosToRestore = savedScrollPosition;
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      window.scrollTo(0, scrollPosToRestore);
+    }, 50);
+  });
+}
 
 function uploadSongImage(input, imageKey) { const file = input.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem(imageKey, e.target.result); openSongView(currentSongId, currentSlId); }; reader.readAsDataURL(file); }
 function saveImageComment(commentKey, value) { if (value.trim() === '' || value === IMAGE_COMMENT_PLACEHOLDER) localStorage.removeItem(commentKey); else localStorage.setItem(commentKey, value.trim()); }
